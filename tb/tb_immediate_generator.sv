@@ -2,10 +2,10 @@
 module tb_immediate_generator;
 
     logic [31:0] instr;
-    logic [31:0] ext_instr;
+    logic [31:0] imm;
 
     immediate_generator dut (.instr(instr),
-                             .ext_instr(ext_instr));
+                             .ext_instr(imm));
 
 
     initial begin
