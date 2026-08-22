@@ -1,5 +1,5 @@
 module instruction_memory (
-    input logic [11:0] current_pc,
+    input logic [31:0] current_pc,
     output logic [31:0] instruction
 );
 

@@ -2,10 +2,10 @@
 
 module tb_pc;
 
-    logic [11:0] next_pc;
+    logic [31:0] next_pc;
     logic clk;
     logic rstn;
-    logic [11:0] current_pc;
+    logic [31:0] current_pc;
 
     pc dut (.next_pc(next_pc),
             .clk(clk),
