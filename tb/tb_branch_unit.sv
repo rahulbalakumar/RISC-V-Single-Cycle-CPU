@@ -78,4 +78,89 @@ module tb_branch_unit;
             fail_count++;
             $display("Case 4 : FAIL - expected 200, got %0d", next_pc);
         end
+
+        // Case 5 (branch) : pc_control = 01 (BNE not taken)
+        current_pc = 32'd100;
+        imm = 32'd100;
+        funct3 = 3'b001;
+        zero = 1'b1;
+        alu_result = 32'd0;
+        pc_control = 2'b01;
+        #1;
+        if (next_pc == 32'd104) begin
+            pass_count++;
+            $display("Case 5 : PASS - next_pc = %0d",next_pc);
+        end else begin
+            fail_count++;
+            $display("Case 5 : FAIL - expected 104, got %0d", next_pc);
+        end
+
+        // Case 6 (invalid funct3) : pc_control = 01
+        current_pc = 32'd100;
+        imm = 32'd100;
+        funct3 = 3'b101;
+        zero = 1'b0;
+        alu_result = 32'd0;
+        pc_control = 2'b01;
+        #1;
+        if (next_pc == 32'd104) begin
+            pass_count++;
+            $display("Case 6 : PASS - next_pc = %0d", next_pc);
+        end else begin
+            fail_count++;
+            $display("Case 6 : FAIL - expected 104, got %0d", next_pc);
+        end
+
+        // Case 7 (JAL) : pc_control = 10
+        current_pc = 32'd100;
+        imm = 32'd100;
+        funct3 = 3'b000;
+        zero = 1'b0;
+        alu_result = 32'd25;
+        pc_control = 2'b10;
+        #1;
+        if (next_pc == 32'd25) begin
+            pass_count++;
+            $display("Case 7 : PASS - next_pc = %0d", next_pc);
+        end else begin
+            fail_count++;
+            $display("Case 7 : FAIL - expected 25, got %0d", next_pc);
+        end
+
+        // Case 8 (JALR) : pc_control = 11 alu_result's LSB is not 1
+        current_pc = 32'd100;
+        imm = 32'd100;
+        funct3 = 3'b000;
+        zero = 1'b0;
+        alu_result = 32'd4;
+        pc_control = 2'b11;
+        #1;
+        if (next_pc == 32'd4) begin 
+            pass_count++;
+            $display("Case 8 : PASS - next_pc = %0d", next_pc);
+        end else begin
+            fail_count++;
+            $display("Case 8 : FAIL - expected 4, got %0d", next_pc);
+        end
+
+        // Case 9 (JALR) : pc_control = 11 alu_result's LSB is 1
+        current_pc = 32'd100;
+        imm = 32'd100;
+        funct3 = 3'b000;
+        zero = 1'b0;
+        alu_result = 32'd5;
+        pc_control = 2'b11;
+        #1;
+        if (next_pc == 32'd4) begin
+            pass_count++;
+            $display("Case 9 : PASS - next_pc = %0d", next_pc);
+        end else begin
+            fail_count++;
+            $display("Case 9 : FAIL - expected 4, got %0d", next_pc);
+        end
+
+        $display("Total : %0d passed, %0d failed",pass_count, fail_count);
+        $finish();
+    end
+endmodule
     
