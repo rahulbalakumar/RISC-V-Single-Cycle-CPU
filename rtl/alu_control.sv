@@ -1,5 +1,5 @@
 module alu_control(
-    input logic [31:0] instr,
+    input logic [31:0] instruction,
     output logic [3:0] alu_control
 );
         //     alu_control
@@ -9,16 +9,16 @@ module alu_control(
         // SLT      0011
         // SLTU     0100
         // XOR      0101
-        // SRL      0110
+        // SRL      0110alu
         // SRA      0111
         // OR       1000
         // AND      1001
     always_comb begin                                  
-        case(instr[6:0])
+        case(instruction[6:0])
             7'b0110011 : begin // R-type
-                case(instr[14:12])
+                case(instruction[14:12])
                     3'b000: begin // 
-                        case(instr[31:25]) 
+                        case(instruction[31:25]) 
                             7'b000_000_0: begin // ADD
                                 alu_control = 4'b0000;
                             end
@@ -32,7 +32,7 @@ module alu_control(
                     end
 
                     3'b101: begin
-                        case(instr[31:25])
+                        case(instruction[31:25])
                             7'b000_000_0: begin // SRL
                                 alu_control = 4'b0110;
                             end
@@ -69,12 +69,12 @@ module alu_control(
 
             end
             7'b0010011 : begin // I-type
-                case(instr[14:12]) 
+                case(instruction[14:12]) 
                     3'b001: begin // SLLI
                         alu_control = 4'b0010;
                     end
                     3'b101: begin
-                        case(instr[31:25])
+                        case(instruction[31:25])
                             7'b000_000_0: begin // SRLI
                                 alu_control = 4'b0110;
                             end
